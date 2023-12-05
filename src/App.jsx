@@ -14,13 +14,13 @@ function App() {
       .catch((err) => console.error);
   }, []);
 
-  function tomatoPic(rtScore){
-    if (rtScore >= 75){
-      return "public/CertFreshTomatoes.png"
-    } else if (rtScore >= 60){
-      return "public/60Tomato.png"
+  function tomatoPic(rtScore) {
+    if (rtScore >= 75) {
+      return "public/CertFreshTomatoes.png";
+    } else if (rtScore >= 60) {
+      return "public/60Tomato.png";
     } else {
-      return "public/less59Tomato.jpg"
+      return "public/less59Tomato.jpg";
     }
   }
 
@@ -33,11 +33,22 @@ function App() {
             return (
               <div className="card" key={index}>
                 <h2>{movieObj.title}</h2>
-                <img src={movieObj.image} className="movieImg" width="300px"alt=""/>
-                <h5>{"Director: " + movieObj.director}</h5> 
-                <img src= {tomatoPic(movieObj.rt_score)} width="100px" alt="" />
-                <p>{movieObj.rt_score}</p>
-                <p>{movieObj.description}</p>
+                <img
+                  src={movieObj.image}
+                  className="movieImg"
+                  width="300px"
+                  alt=""
+                />
+                <h5>{"Director: " + movieObj.director}</h5>
+                <div className="movieScore">
+                  <img
+                    src={tomatoPic(movieObj.rt_score)}
+                    width="100px"
+                    alt=""
+                  />
+                  <p>{movieObj.rt_score}</p>
+                </div>
+                <p className="movieDesc">{movieObj.description}</p>
               </div>
             );
           })}
