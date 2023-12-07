@@ -1,59 +1,33 @@
-import { useState, useEffect } from "react";
+import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
+import { HomePage, FilmsPage  } from "./pages/index"
 import "./App.css";
 
 function App() {
-  const [movieList, setMovieList] = useState([]);
-
-  useEffect(() => {
-    fetch("https://studioghibliapi-d6fc8.web.app/films")
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setMovieList(result);
-      })
-      .catch((err) => console.error);
-  }, []);
-
-  function tomatoPic(rtScore) {
-    if (rtScore >= 75) {
-      return "public/CertFreshTomatoes.png";
-    } else if (rtScore >= 60) {
-      return "public/60Tomato.png";
-    } else {
-      return "public/less59Tomato.jpg";
-    }
-  }
 
   return (
     <>
-      <h1>Studio Ghibli API</h1>
-      <div id="cardContainer">
-        <ul>
-          {movieList.map((movieObj, index) => {
-            return (
-              <div className="card" key={index}>
-                <h2>{movieObj.title}</h2>
-                <img
-                  src={movieObj.image}
-                  className="movieImg"
-                  width="300px"
-                  alt=""
-                />
-                <h5>{"Director: " + movieObj.director}</h5>
-                <div className="movieScore">
-                  <img
-                    src={tomatoPic(movieObj.rt_score)}
-                    width="100px"
-                    alt=""
-                  />
-                  <p>{movieObj.rt_score}</p>
-                </div>
-                <p className="movieDesc">{movieObj.description}</p>
-              </div>
-            );
-          })}
+    <BrowserRouter>
+      <nav>
+        <ul style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          listStyle: 'none',
+          padding: '1rem',
+        }}>
+          <li>
+            <NavLink to='/'>Home</NavLink>
+          </li>
+          <li>
+          <NavLink to='/films'>Films</NavLink>
+          </li>
         </ul>
-      </div>
+      </nav>
+
+      <Routes>
+        <Route element={<HomePage />} path="/" />
+        <Route element={<FilmsPage />} path="/films" />
+      </Routes>
+    </BrowserRouter>
     </>
   );
 }
