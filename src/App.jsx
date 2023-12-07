@@ -1,33 +1,20 @@
-import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
-import { HomePage, FilmsPage  } from "./pages/index"
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { HomePage, FilmsPage} from "./pages/index";
+import NavBar from "./Route/NavBar";
+
 import "./App.css";
 
 function App() {
-
   return (
     <>
-    <BrowserRouter>
-      <nav>
-        <ul style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          listStyle: 'none',
-          padding: '1rem',
-        }}>
-          <li>
-            <NavLink to='/'>Home</NavLink>
-          </li>
-          <li>
-          <NavLink to='/films'>Films</NavLink>
-          </li>
-        </ul>
-      </nav>
+      <BrowserRouter>
+        <NavBar/>
 
-      <Routes>
-        <Route element={<HomePage />} path="/" />
-        <Route element={<FilmsPage />} path="/films" />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route element={<HomePage />} path="/" />
+          <Route element={<FilmsPage />} path="/films" />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

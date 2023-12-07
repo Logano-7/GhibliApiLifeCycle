@@ -1,8 +1,16 @@
-export default function filterFilmsByDirector(films, director){
-    return films.filter(film => film.director === director);
-
+export function filterFilmsByDirector(list, director) {
+  if (!director) {
+    return list;
+  }
+  return list.filter((item) => item.director === director);
 }
 
-export default function getListOf(film, key){
-    return film.map(film => film[key]);
+export function getListOf(list, prop) {
+  const result = [];
+  list.forEach((item) => {
+    if (!result.includes(item[prop])) {
+      result.push(item[prop]);
+    }
+  });
+  return result;
 }

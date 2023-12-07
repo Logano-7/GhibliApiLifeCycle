@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+import { filterFilmsByDirector, getListOf } from "../helpers/film.helpers";
 
 export default function FilmsPage() {
   const [movieList, setMovieList] = useState([]);
-  const [searchDirector, setSearchDirector] = useState("")
-  
+  const [searchDirector, setSearchDirector] = useState("");
 
   useEffect(() => {
     fetch("https://studioghibliapi-d6fc8.web.app/films")
@@ -25,26 +25,36 @@ export default function FilmsPage() {
     }
   }
 
+  // Derived State
+  const filmsByDirector = filterFilmsByDirector(movieList, searchDirector);
+  const directors = getListOf(movieList, "director");
+
   return (
     <>
       <h1>Studio Ghibli API</h1>
       <form>
         <div className="form-group">
-            <label htmlFor="searchDirector">Search by Director</label>
-            <select name="searchDirector" id="searchDirector" value={searchDirector} onChange={(e) => setSearchDirector(e.target.value)}>  
-                <option value="">All</option>
-                <option value="Hayao Miyazaki">Hayao Miyazaki</option>
-                <option value="Isao Takahata">Isao Takahata</option>
-                <option value="Yoshifumi Kondō">Yoshifumi Kondō</option>
-                <option value="Hiroyuki Morita">Hiroyuki Morita</option>
-                <option value="Gorō Miyazaki">Gorō Miyazaki</option>
-                <option value="Hiromasa Yonebayashi">Hiromasa Yonebayashi</option>
-                </select> 
-            </div>
+          <label htmlFor="searchDirector">Search by Director</label>
+          <select
+            name="searchDirector"
+            id="searchDirector"
+            value={searchDirector}
+            onChange={(e) => setSearchDirector(e.target.value)}
+          >
+            <option value="">All</option>
+            {directors.map((director, index) => {
+              return (
+                <option key={index} value={director}>
+                  {director}
+                </option>
+              );
+            })}
+          </select>
+        </div>
       </form>
       <div id="cardContainer">
         <ul>
-          {movieList.map((movieObj, index) => {
+          {filmsByDirector.map((movieObj, index) => {
             return (
               <div className="card" key={index}>
                 <h2>{movieObj.title}</h2>
