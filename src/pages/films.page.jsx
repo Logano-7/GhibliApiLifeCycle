@@ -33,11 +33,22 @@ export default function FilmsPage() {
   // Derived State
   const filmsByDirector = filterFilmsByDirector(movieList, searchDirector);
   const directors = getListOf(movieList, "director");
-  /* const { total, avg_score, latest } = getFilmStats(movieList); */
-
+  const { total, avg_score, latest } = getFilmStats(movieList);
+  console.log(typeof avg_score)
   return (
     <>
       <h1>Studio Ghibli API</h1>
+      <div className="statsDiv">
+        <div>
+          <span>Number Of Films {total}</span>
+        </div>
+        <div>
+          <span>Average Rating {avg_score.toFixed(2)}</span>
+        </div>
+        <div>
+          <span>Latest Film {latest}</span>
+        </div>
+      </div>
       <form>
         <div className="form-group">
           <label htmlFor="searchDirector">Search by Director</label>
@@ -63,26 +74,26 @@ export default function FilmsPage() {
           {filmsByDirector.map((movieObj, index) => {
             return (
               <div className="card" key={index}>
-                  <Link to={`${index}`}>
+                <Link to={`${movieObj.id}`}>
                   <h2>{movieObj.title}</h2>
-                  </Link>
+                </Link>
+                <img
+                  src={movieObj.image}
+                  className="movieImg"
+                  width="300px"
+                  alt=""
+                />
+                <h5>{"Director: " + movieObj.director}</h5>
+                <div className="movieScore">
                   <img
-                    src={movieObj.image}
-                    className="movieImg"
-                    width="300px"
+                    src={tomatoPic(movieObj.rt_score)}
+                    width="100px"
                     alt=""
                   />
-                  <h5>{"Director: " + movieObj.director}</h5>
-                  <div className="movieScore">
-                    <img
-                      src={tomatoPic(movieObj.rt_score)}
-                      width="100px"
-                      alt=""
-                    />
-                    <p>{movieObj.rt_score}</p>
-                  </div>
-                  <p className="movieDesc">{movieObj.description}</p>
+                  <p>{movieObj.rt_score}</p>
                 </div>
+                <p className="movieDesc">{movieObj.description}</p>
+              </div>
             );
           })}
         </ul>

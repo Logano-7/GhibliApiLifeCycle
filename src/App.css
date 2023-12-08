@@ -30,10 +30,6 @@
   grid-row: 1;
 }
 
-/* .card h5{
-  grid-column: 2;
-  grid-row: 2;
-} */
 
 .card .movieScore{
   display: flex;
@@ -56,4 +52,42 @@
 .card .movieImg{
   grid-column: 1;
   grid-row: 1 / 4;
+}
+
+.statsDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  width: 100%;
+
+  
+}
+
+.form-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1rem;
+  padding: 1rem;
+  width: 100%;
+
+}
+
+.spgContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  max-width: 1000px;
+}
+
+.spgP{
+  margin: 1rem;
+  border-radius: 4px;
+  max-width: 1000px;
 }

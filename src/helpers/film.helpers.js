@@ -17,15 +17,16 @@ export function getListOf(list, prop) {
 }
 
 export function getFilmStats(list) {
-  const stats = {
-    acc_rating: list.reduce((acc, item) => acc + item.rating, 0),
-    avg_rating: list.reduce((acc, item) => acc + item.rating, 0) / list.length,
-    total: list.length,
-    latest: list.reduce((acc, item) => {
-      if (acc === null) {
-        return item.release_date;
-      }
-      return acc > item.release_date ? acc : item.release_date;
-    }, null),
+  
+  const acc_score = list.reduce((acc, item) => acc + parseInt(item.rt_score), 0);
+  const avg_score = (acc_score / list.length);
+  const total = list.length;
+  const latest = Math.max(...list.map((item) => item.release_date));
+
+  return {
+    avg_score,
+    acc_score,
+    total,
+    latest,
   };
 }

@@ -5,6 +5,8 @@ export default function SingleFilmPage() {
   const [item, setItem] = useState({});
   const { id } = useParams();
 
+  console.log(id)
+
   function getFilm() {
     fetch(`https://studioghibliapi-d6fc8.web.app/films/${id}`)
       .then((res) => res.json())
@@ -21,16 +23,16 @@ export default function SingleFilmPage() {
 console.log(item);
   return (
     <>
-      <div>
+      <div className="spgContainer">
         <div>
-          <img src={`${item.image}`} alt={`${item.title} Poster`} />
+          <img src={`${item.image}`} width="300px" alt={`${item.title} Poster`} />
         </div>
         <div>
           <h1>{item.title}</h1>
           <p>
             Directed by {item.director}. Produced by {item.producer}.
           </p>
-          <p>
+          <p className="spgP">
             The film was released in <strong>{item.release_date}</strong> and
             garnered a <strong>{item.rt_score}</strong> aggregate score on{" "}
             <a
@@ -43,7 +45,7 @@ console.log(item);
             .
           </p>
           <h2>Description</h2>
-          <p>{item.description}</p>
+          <p className="spgP">{item.description}</p>
         </div>
       </div>
     </>
