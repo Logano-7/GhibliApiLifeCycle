@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { HomePage, FilmsPage} from "./pages/index";
-import NavBar from "./Route/NavBar";
+import { HomePage, FilmsPage, SingleFilmPage} from "./pages/index";
+import NavBar from "./routes/NavBar";
 
 import "./App.css";
 
@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route element={<HomePage />} path="/" />
           <Route element={<FilmsPage />} path="/films" />
+          <Route element={<SingleFilmPage />} path="/films/:id" />
         </Routes>
       </BrowserRouter>
     </>

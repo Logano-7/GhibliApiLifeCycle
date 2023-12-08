@@ -5,6 +5,7 @@ export function filterFilmsByDirector(list, director) {
   return list.filter((item) => item.director === director);
 }
 
+
 export function getListOf(list, prop) {
   const result = [];
   list.forEach((item) => {
@@ -13,4 +14,18 @@ export function getListOf(list, prop) {
     }
   });
   return result;
+}
+
+export function getFilmStats(list) {
+  const stats = {
+    acc_rating: list.reduce((acc, item) => acc + item.rating, 0),
+    avg_rating: list.reduce((acc, item) => acc + item.rating, 0) / list.length,
+    total: list.length,
+    latest: list.reduce((acc, item) => {
+      if (acc === null) {
+        return item.release_date;
+      }
+      return acc > item.release_date ? acc : item.release_date;
+    }, null),
+  };
 }

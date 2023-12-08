@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { filterFilmsByDirector, getListOf } from "../helpers/film.helpers";
+import { Link } from "react-router-dom";
+import {
+  filterFilmsByDirector,
+  getListOf,
+  getFilmStats,
+} from "../helpers/film.helpers";
 
 export default function FilmsPage() {
   const [movieList, setMovieList] = useState([]);
@@ -28,6 +33,7 @@ export default function FilmsPage() {
   // Derived State
   const filmsByDirector = filterFilmsByDirector(movieList, searchDirector);
   const directors = getListOf(movieList, "director");
+  /* const { total, avg_score, latest } = getFilmStats(movieList); */
 
   return (
     <>
@@ -57,24 +63,26 @@ export default function FilmsPage() {
           {filmsByDirector.map((movieObj, index) => {
             return (
               <div className="card" key={index}>
-                <h2>{movieObj.title}</h2>
-                <img
-                  src={movieObj.image}
-                  className="movieImg"
-                  width="300px"
-                  alt=""
-                />
-                <h5>{"Director: " + movieObj.director}</h5>
-                <div className="movieScore">
+                  <Link to={`${index}`}>
+                  <h2>{movieObj.title}</h2>
+                  </Link>
                   <img
-                    src={tomatoPic(movieObj.rt_score)}
-                    width="100px"
+                    src={movieObj.image}
+                    className="movieImg"
+                    width="300px"
                     alt=""
                   />
-                  <p>{movieObj.rt_score}</p>
+                  <h5>{"Director: " + movieObj.director}</h5>
+                  <div className="movieScore">
+                    <img
+                      src={tomatoPic(movieObj.rt_score)}
+                      width="100px"
+                      alt=""
+                    />
+                    <p>{movieObj.rt_score}</p>
+                  </div>
+                  <p className="movieDesc">{movieObj.description}</p>
                 </div>
-                <p className="movieDesc">{movieObj.description}</p>
-              </div>
             );
           })}
         </ul>
