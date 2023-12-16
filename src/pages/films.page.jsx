@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Badge, Card, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import MainLayout from "../components/index.js";
 import {
   filterFilmsByDirector,
   getListOf,
@@ -33,71 +35,73 @@ export default function FilmsPage() {
   // Derived State
   const filmsByDirector = filterFilmsByDirector(movieList, searchDirector);
   const directors = getListOf(movieList, "director");
-  const { total, avg_score, latest } = getFilmStats(movieList);
+  const { total, avg_score, latest } = getFilmStats(filmsByDirector);
   console.log(typeof avg_score)
   return (
-    <>
-      <h1>Studio Ghibli API</h1>
-      <div className="statsDiv">
-        <div>
-          <span>Number Of Films {total}</span>
-        </div>
-        <div>
-          <span>Average Rating {avg_score.toFixed(2)}</span>
-        </div>
-        <div>
-          <span>Latest Film {latest}</span>
-        </div>
-      </div>
-      <form>
-        <div className="form-group">
-          <label htmlFor="searchDirector">Search by Director</label>
-          <select
-            name="searchDirector"
-            id="searchDirector"
-            value={searchDirector}
-            onChange={(e) => setSearchDirector(e.target.value)}
-          >
-            <option value="">All</option>
-            {directors.map((director, index) => {
-              return (
-                <option key={index} value={director}>
-                  {director}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-      </form>
-      <div id="cardContainer">
-        <ul>
-          {filmsByDirector.map((movieObj, index) => {
-            return (
-              <div className="card" key={index}>
-                <Link to={`${movieObj.id}`}>
-                  <h2>{movieObj.title}</h2>
-                </Link>
-                <img
-                  src={movieObj.image}
-                  className="movieImg"
-                  width="300px"
-                  alt=""
-                />
-                <h5>{"Director: " + movieObj.director}</h5>
-                <div className="movieScore">
-                  <img
-                    src={tomatoPic(movieObj.rt_score)}
-                    width="100px"
-                    alt=""
-                  />
-                  <p>{movieObj.rt_score}</p>
+    <MainLayout>
+      <div className="">
+        <h1>Studio Ghibli Films</h1>
+        <Form>
+          <Form.Group className="mb-3" controlId="searchDirector">
+            <Form.Label>Filter by Director</Form.Label>
+            <Form.Select
+              value={searchDirector}
+              onChange={(e) => setSearchDirector(e.target.value)}
+            >
+              <option value="">All</option>
+              {directors.map((item, idx) => {
+                return (
+                  <option key={idx} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </Form.Select>
+          </Form.Group>
+        </Form>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <div className="d-flex justify-content-between">
+                  <small># Of Films</small>
+                  <Badge bg="dark">{total}</Badge>
                 </div>
-                <p className="movieDesc">{movieObj.description}</p>
-              </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              <Card.Body>
+                <div className="d-flex justify-content-between">
+                  <small>Average Rating</small>
+                  <Badge bg="dark">{avg_score.toFixed(2)}</Badge>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              <Card.Body>
+                <div className="d-flex justify-content-between">
+                  <small>Latest Film</small>
+                  <Badge bg="dark">{latest}</Badge>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <hr />
+        <ListGroup>
+          {filmsByDirector.map((item) => {
+            return (
+              <ListGroupItem key={item.id}>
+                <Link to={`${item.id}`}>{item.title}</Link>
+              </ListGroupItem>
             );
           })}
-        </ul>
+        </ListGroup>
       </div>
-    </>
+    </MainLayout>
   );
 }
